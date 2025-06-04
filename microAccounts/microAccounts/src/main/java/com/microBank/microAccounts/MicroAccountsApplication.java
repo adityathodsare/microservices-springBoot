@@ -8,6 +8,9 @@ public class MicroAccountsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MicroAccountsApplication.class, args);
+		//git add .
+ 		//git commit -m "Updated feature or bug fix description"
+ 		//git push origin main
 	}
 
 }
