@@ -1,11 +1,20 @@
 package com.microBank.microAccounts.service.impl;
 
 import com.microBank.microAccounts.DTO.CustomerDTO;
+import com.microBank.microAccounts.constants.AccountsConstants;
+import com.microBank.microAccounts.entity.Accounts;
+import com.microBank.microAccounts.entity.Customer;
+import com.microBank.microAccounts.exception.CustomerAlreadyExistsException;
+import com.microBank.microAccounts.mapper.CustomerMapper;
 import com.microBank.microAccounts.repository.AccountsRepository;
 import com.microBank.microAccounts.repository.CustomerRepository;
 import com.microBank.microAccounts.service.IAccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.Random;
 
 
 @Service
@@ -18,6 +27,43 @@ public class IAccountServiceImpl implements IAccountService {
 
     @Override
     public void createAccount(CustomerDTO customerDTO) {
+        Customer customer = CustomerMapper.mapToCustomer(customerDTO, new Customer());
 
+        Optional<Customer> optionalCustomer  =
+                customerRepository.findByMobileNumber(customerDTO.getMobileNumber());
+
+        if (optionalCustomer.isPresent()) {
+            throw  new CustomerAlreadyExistsException("Customer already exists / mobile number already exists "
+                    + customerDTO.getMobileNumber());
+        }
+
+        customer.setCreatedAt(LocalDateTime.now());
+        customer.setCreatedBy("Admin1");
+
+
+
+        Customer savedCustomer = customerRepository.save(customer);
+        accountRepository.save(createNewAccount(savedCustomer));
+
+
+    }
+
+
+    /**
+     * @param customer - Customer Object
+     * @return the new account details
+     */
+    private Accounts createNewAccount(Customer customer) {
+        Accounts newAccount = new Accounts();
+        newAccount.setCustomerId(customer.getCustomerId());
+        long randomAccNumber = 1000000000L + new Random().nextInt(900000000);
+
+        newAccount.setAccountNumber(randomAccNumber);
+        newAccount.setAccountType(AccountsConstants.SAVINGS);
+        newAccount.setBranchAddress(AccountsConstants.ADDRESS);
+        newAccount.setCreatedAt(LocalDateTime.now());
+        newAccount.setCreatedBy("Admin1");
+
+        return newAccount;
     }
 }
