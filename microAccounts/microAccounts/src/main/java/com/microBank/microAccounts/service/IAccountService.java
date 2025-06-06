@@ -8,6 +8,6 @@ public interface IAccountService {
 
     CustomerDTO fetchAccount(String mobileNumber);
 
-
+    boolean updateAccount(CustomerDTO customerDTO);
 
 }
