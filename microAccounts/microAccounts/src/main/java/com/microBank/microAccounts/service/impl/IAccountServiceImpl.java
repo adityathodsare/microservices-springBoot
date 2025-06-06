@@ -1,10 +1,13 @@
 package com.microBank.microAccounts.service.impl;
 
+import com.microBank.microAccounts.DTO.AccountsDTO;
 import com.microBank.microAccounts.DTO.CustomerDTO;
 import com.microBank.microAccounts.constants.AccountsConstants;
 import com.microBank.microAccounts.entity.Accounts;
 import com.microBank.microAccounts.entity.Customer;
 import com.microBank.microAccounts.exception.CustomerAlreadyExistsException;
+import com.microBank.microAccounts.exception.ResourceNotFoundException;
+import com.microBank.microAccounts.mapper.AccountsMapper;
 import com.microBank.microAccounts.mapper.CustomerMapper;
 import com.microBank.microAccounts.repository.AccountsRepository;
 import com.microBank.microAccounts.repository.CustomerRepository;
@@ -47,8 +50,6 @@ public class IAccountServiceImpl implements IAccountService {
 
 
     }
-
-
     /**
      * @param customer - Customer Object
      * @return the new account details
@@ -65,5 +66,27 @@ public class IAccountServiceImpl implements IAccountService {
         newAccount.setCreatedBy("Admin1");
 
         return newAccount;
+    }
+
+
+    @Override
+    public CustomerDTO fetchAccount(String mobileNumber) {
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                ()-> new ResourceNotFoundException("Customer", "mobileNumber",mobileNumber)
+        );
+
+        Accounts accounts = accountRepository.findByCustomerId(customer.getCustomerId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Accounts", "customerId", String.valueOf(customer.getCustomerId()))
+                );
+
+        CustomerDTO customerDTO= CustomerMapper.mapToCustomerDTO(customer, new CustomerDTO());
+        customerDTO.setAccountsDTO(AccountsMapper.mapToAccountsDto(accounts, new AccountsDTO()));
+
+
+
+        return  customerDTO ;
+
+
     }
 }

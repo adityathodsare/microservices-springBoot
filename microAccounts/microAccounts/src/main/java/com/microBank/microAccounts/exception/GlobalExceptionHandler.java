@@ -33,4 +33,17 @@ public class GlobalExceptionHandler extends  RuntimeException{
 
     }
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponceDTO> handleResourceNotFoundException(ResourceNotFoundException exception) {
+        ErrorResponceDTO errorResponceDTO = new ErrorResponceDTO(
+                webRequest.getDescription(false), // we ll get only api not much info needed
+                HttpStatus.NOT_FOUND,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(errorResponceDTO, HttpStatus.NOT_FOUND);
+
+    }
+
 }
