@@ -10,4 +10,6 @@ public interface IAccountService {
 
     boolean updateAccount(CustomerDTO customerDTO);
 
+    boolean deleteAccount(String mobileNumber);
+
 }
