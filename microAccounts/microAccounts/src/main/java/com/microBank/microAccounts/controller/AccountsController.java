@@ -55,7 +55,6 @@ public class AccountsController {
 
 
 
-
     @DeleteMapping("/delete/{mobileNumber}")
     public ResponseEntity<ResponceDTO> deleteAccountDetails(@PathVariable String mobileNumber) {
         boolean isDeleted = accountService.deleteAccount(mobileNumber) ;

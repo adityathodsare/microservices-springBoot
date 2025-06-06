@@ -46,4 +46,16 @@ public class GlobalExceptionHandler extends  RuntimeException{
 
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponceDTO> handleGlobalException(Exception exception) {
+        ErrorResponceDTO errorResponceDTO = new ErrorResponceDTO(
+                webRequest.getDescription(false), // we ll get only api not much info needed
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(errorResponceDTO, HttpStatus.NOT_FOUND);
+
+    }
 }
