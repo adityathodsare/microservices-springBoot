@@ -40,8 +40,8 @@ public class IAccountServiceImpl implements IAccountService {
                     + customerDTO.getMobileNumber());
         }
 
-        customer.setCreatedAt(LocalDateTime.now());
-        customer.setCreatedBy("Admin1");
+//        customer.setCreatedAt(LocalDateTime.now());
+//        customer.setCreatedBy("Admin1");
 
 
 
@@ -62,8 +62,8 @@ public class IAccountServiceImpl implements IAccountService {
         newAccount.setAccountNumber(randomAccNumber);
         newAccount.setAccountType(AccountsConstants.SAVINGS);
         newAccount.setBranchAddress(AccountsConstants.ADDRESS);
-        newAccount.setCreatedAt(LocalDateTime.now());
-        newAccount.setCreatedBy("Admin1");
+//        newAccount.setCreatedAt(LocalDateTime.now());
+//        newAccount.setCreatedBy("Admin1");
 
         return newAccount;
     }
