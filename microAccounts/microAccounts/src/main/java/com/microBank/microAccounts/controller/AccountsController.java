@@ -4,13 +4,17 @@ import com.microBank.microAccounts.DTO.CustomerDTO;
 import com.microBank.microAccounts.DTO.ResponceDTO;
 import com.microBank.microAccounts.constants.AccountsConstants;
 import com.microBank.microAccounts.service.IAccountService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api", produces =( MediaType.APPLICATION_JSON_VALUE))
+@Validated
 public class AccountsController {
 
     private final IAccountService accountService ;
@@ -21,7 +25,7 @@ public class AccountsController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<ResponceDTO> createAccount(@RequestBody CustomerDTO customerDTO) {
+    public ResponseEntity<ResponceDTO> createAccount(@Valid @RequestBody CustomerDTO customerDTO) {
 
         accountService.createAccount(customerDTO);
 
@@ -41,7 +45,7 @@ public class AccountsController {
 
 
     @PutMapping("/update")
-    public ResponseEntity<ResponceDTO> updateAccountDetails(@RequestBody CustomerDTO customerDTO) {
+    public ResponseEntity<ResponceDTO> updateAccountDetails( @Valid @RequestBody CustomerDTO customerDTO) {
         boolean isUpdated = accountService.updateAccount(customerDTO) ;
         if (isUpdated) {
             return ResponseEntity.status(HttpStatus.OK)
@@ -56,7 +60,7 @@ public class AccountsController {
 
 
     @DeleteMapping("/delete/{mobileNumber}")
-    public ResponseEntity<ResponceDTO> deleteAccountDetails(@PathVariable String mobileNumber) {
+    public ResponseEntity<ResponceDTO> deleteAccountDetails(@PathVariable @Pattern(regexp = "\\d{10}" ) String mobileNumber) {
         boolean isDeleted = accountService.deleteAccount(mobileNumber) ;
         if (isDeleted) {
             return ResponseEntity.status(HttpStatus.OK)
