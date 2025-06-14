@@ -1,0 +1,41 @@
+services:
+  accounts:
+    image: "adityathodsare/micro-accounts:v0"
+    container_name: accounts
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          memory: "700m"
+    networks:
+      - "microbank"
+
+
+  loans:
+    image: "adityathodsare/micro-loans:v0"
+    container_name: loans
+    ports:
+      - "8090:8090"
+    deploy:
+      resources:
+        limits:
+          memory: "700m"
+    networks:
+      - "microbank"
+
+  cards:
+    image: "adityathodsare/micro-cards:v0"
+    container_name: cards
+    ports:
+      - "9000:9000"
+    deploy:
+      resources:
+        limits:
+          memory: "700m"
+    networks:
+      - "microbank"
+
+networks:
+  microbank:
+    driver: bridge
