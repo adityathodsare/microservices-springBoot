@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+<<<<<<< HEAD
     <file url="file://$PROJECT_DIR$/micro-cards/micro-cards/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/micro-loans/micro-loans/src/main/java" charset="UTF-8" />
+=======
+>>>>>>> 3a532055081fd4f34247fea5a2864045b3c86e66
     <file url="file://$PROJECT_DIR$/microAccounts/microAccounts/src/main/java" charset="UTF-8" />
   </component>
 </project>

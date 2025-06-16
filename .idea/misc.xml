@@ -4,8 +4,11 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/micro-cards/micro-cards/pom.xml" />
         <option value="$PROJECT_DIR$/micro-loans/micro-loans/pom.xml" />
+=======
+>>>>>>> 3a532055081fd4f34247fea5a2864045b3c86e66
         <option value="$PROJECT_DIR$/microAccounts/microAccounts/pom.xml" />
       </list>
     </option>
